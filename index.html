@@ -43,7 +43,7 @@ footer a {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // Ingredient pools for random selection
-const protein = ["chicken","turkey","beef","pork","salmon","tuna","shrimp","crab","eggs","tofu","lentils"];
+const protein = ["chicken","turkey","beef","pork","salmon","tuna","shrimp","crab","eggs"];
 const carbs = ["rice","quinoa","oats","pasta","bread","potato","sweet potato","corn","tortilla"];
 const veggies = [
   "Carrot",
@@ -53,7 +53,7 @@ const veggies = [
   "Brussels Sprouts",
   "Cauliflower",
   "Spinach",
-  "Endive (Chicory)",
+  "Chicory",
   "Green Beans",
   "Peas",
   "Tomato",
@@ -153,7 +153,7 @@ async function fetchTheMealDB(ingredients){
   const data = await resp.json();
   if(!data.meals) return [];
   let detailed=[];
-  for(const meal of data.meals.slice(0,5)){
+  for(const meal of data.meals.slice(0,100)){
     const det = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`).then(r=>r.json());
     if(det.meals && det.meals[0]) detailed.push(det.meals[0]);
   }
@@ -161,17 +161,17 @@ async function fetchTheMealDB(ingredients){
 }
 
 async function fetchAPINinjas(ingredients){
-  const resp = await fetch(`https://api.api-ninjas.com/v1/recipe?query=${encodeURIComponent(ingredients.join(' '))}&limit=5`, {headers:{'X-Api-Key':NINJAS_KEY}});
+  const resp = await fetch(`https://api.api-ninjas.com/v1/recipe?query=${encodeURIComponent(ingredients.join(' '))}&limit=100`, {headers:{'X-Api-Key':NINJAS_KEY}});
   if(!resp.ok) throw new Error('API Ninjas request failed');
   const data = await resp.json();
-  return data.map(r => ({strMeal:r.title,strMealThumb:r.image||'',strCategory:r.category||'N/A',strArea:r.cuisine||'N/A',strSource:r.url||`https://api-ninjas.com/recipe/${encodeURIComponent(r.title)}`,instructions:r.instructions||'No instructions available'}));
+  return data.map(r => ({strMeal:r.title,strMealThumb:r.image||'',strCategory:r.category||'N/A',strArea:r.cuisine||'N/A',strSource:r.url||`https://api-ninjas.com/recipe/${encodeURIComponent(r.title)}`,ingredients:r.ingredients||'No instructions available'}));
 }
 
 async function fetchSpoonacular(ingredients){
-  const resp = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_KEY}&includeIngredients=${ingredients.join(',')}&number=5&addRecipeInformation=true`);
+  const resp = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_KEY}&includeIngredients=${ingredients.join(',')}&number=100&addRecipeInformation=true`);
   if(!resp.ok) throw new Error('Spoonacular request failed');
   const data = await resp.json();
-  return data.results.map(r => ({strMeal:r.title,strMealThumb:r.image||'',strCategory:r.dishTypes ? r.dishTypes.join(', ') : 'N/A',strArea:r.cuisines ? r.cuisines.join(', ') : 'N/A',strSource:r.sourceUrl||`https://spoonacular.com/recipes/${encodeURIComponent(r.title)}`,instructions:r.instructions||'No instructions available'}));
+  return data.results.map(r => ({strMeal:r.title,strMealThumb:r.image||'',strCategory:r.dishTypes ? r.dishTypes.join(', ') : 'N/A',strArea:r.cuisines ? r.cuisines.join(', ') : 'N/A',strSource:r.sourceUrl||`https://spoonacular.com/recipes/${encodeURIComponent(r.title)}`,ingredients:r.ingredients||'No instructions available'}));
 }
 
 // --- Main: Generate Random Meal ---
@@ -192,7 +192,7 @@ async function generateMeal(){
     recipes.forEach(m=>{
       const card = document.createElement('div');
       card.className = 'recipe-card';
-      card.innerHTML = `<h3>${m.strMeal}</h3><img src='${m.strMealThumb}' alt='${m.strMeal}'><p><strong>Category:</strong> ${m.strCategory||'N/A'}</p><p><strong>Area:</strong> ${m.strArea||'N/A'}</p><p><strong>Instructions:</strong> ${m.strInstructions || m.instructions || 'No instructions available'}</p><p><a href='${m.strSource||''}' target='_blank'>View Full Recipe</a></p>`;
+      card.innerHTML = `<h3>${m.strMeal}</h3><img src='${m.strMealThumb}' alt='${m.strMeal}'><p><strong>Category:</strong> ${m.strCategory||'N/A'}</p><p><strong>Area:</strong> ${m.strArea||'N/A'}</p><p><a href='${m.strSource||''}' target='_blank'>View Full Recipe</a></p>`;
       recipesDiv.appendChild(card);
     });
   }
@@ -206,4 +206,3 @@ checkAPIConnection();
 </footer>
 </body>
 </html>
-
