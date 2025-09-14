@@ -31,9 +31,102 @@ button:hover { opacity: 0.9; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 // Ingredient pools for random selection
-const protein = ["chicken","turkey","beef","pork","salmon","tuna","shrimp","crab","eggs","tofu","lentils"];
-const carbs = ["rice","quinoa","oats","pasta","bread","potato","sweet potato","corn","tortilla"];
-const veggies = ["spinach","broccoli","carrot","onion","tomato","zucchini","mushroom","pepper"];
+const protein = [
+  "Chicken Breast",
+  "Turkey",
+  "Beef",
+  "Pork",
+  "Lamb",
+  "Eggs",
+  "Fish",
+  "Salmon",
+  "Tuna",
+  "Cod",
+  "Shrimp",
+  "Sardines",
+  "Mackerel",
+  "Tofu",
+  "Tempeh",
+  "Edamame",
+  "Lentils",
+  "Chickpeas",
+  "Black Beans",
+  "Kidney Beans",
+  "Quinoa",
+  "Greek Yogurt",
+  "Cottage Cheese",
+  "Cheese",
+  "Milk",
+  "Peanuts",
+  "Almonds",
+  "Cashews",
+  "Pumpkin Seeds",
+  "Sunflower Seeds"
+];
+const carbs = [
+  "Rice",
+  "White Rice",
+  "Brown Rice",
+  "Basmati Rice",
+  "Quinoa",
+  "Couscous",
+  "Oats",
+  "Rolled Oats",
+  "Pasta",
+  "Spaghetti",
+  "Macaroni",
+  "Bread",
+  "Whole Wheat Bread",
+  "Rye Bread",
+  "Potato",
+  "Sweet Potato",
+  "Yam",
+  "Corn",
+  "Polenta",
+  "Barley",
+  "Buckwheat",
+  "Millet",
+  "Lentils",
+  "Chickpeas",
+  "Black Beans",
+  "Kidney Beans",
+  "Pinto Beans",
+  "Peas",
+  "Pumpkin",
+  "Squash",
+  "Banana",
+  "Apple",
+  "Grapes",
+  "Orange",
+  "Mango",
+  "Honey",
+  "Maple Syrup",
+  "Molasses"
+];
+const veggies = [
+  "Carrot",
+  "Leek",
+  "Onion",
+  "Cabbage",
+  "Brussels Sprouts",
+  "Cauliflower",
+  "Spinach",
+  "Endive (Chicory)",
+  "Green Beans",
+  "Peas",
+  "Tomato",
+  "Bell Pepper",
+  "Zucchini",
+  "Pumpkin",
+  "Fennel",
+  "Celery",
+  "Radish",
+  "Parsnip",
+  "Beetroot",
+  "Garlic",
+  "Mushroom",
+  "Chard"
+];
 
 // API keys for external services
 const SPOONACULAR_KEY = 'b6e0fc154f2944e980d07b65e1cbb8a1';
@@ -168,3 +261,4 @@ checkAPIConnection();
 </script>
 </body>
 </html>
+
